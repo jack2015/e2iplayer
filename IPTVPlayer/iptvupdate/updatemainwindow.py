@@ -438,7 +438,7 @@ class UpdateMainAppImpl(IUpdateObjectInterface):
             self.stepFinished(-1, msg)
             return
         
-        cmd = 'rm -f "%s/*" > /dev/null 2>&1; tar -xzf "%s" -C "%s" 2>&1; PREV_RET=$?; rm -f "%s" > /dev/null 2>&1; (exit $PREV_RET)' % (self.destinationArchive, self.sourceArchive, self.destinationArchive, self.sourceArchive)
+        cmd = 'rm -f "%s/*" ; tar -xzf "%s" -C "%s" 2>&1; PREV_RET=$?; rm -f "%s" ; (exit $PREV_RET)' % (self.destinationArchive, self.sourceArchive, self.destinationArchive, self.sourceArchive)
         self.cmd = iptv_system( cmd, self.__unpackCmdFinished )
         
     def stepGetEncKey(self):
@@ -481,7 +481,7 @@ class UpdateMainAppImpl(IUpdateObjectInterface):
             self.stepFinished(0, _('Skipped.'))
             return
         
-        cmd = 'tar -xzf "%s" -C "%s" 2>&1; PREV_RET=$?; rm -f "%s" > /dev/null 2>&1; (exit $PREV_RET)' % (self.graphicsSourceArchive, os_path.join(self.ExtensionTmpPath, 'IPTVPlayer/'), self.graphicsSourceArchive)
+        cmd = 'tar -xzf "%s" -C "%s" 2>&1; PREV_RET=$?; rm -f "%s" ; (exit $PREV_RET)' % (self.graphicsSourceArchive, os_path.join(self.ExtensionTmpPath, 'IPTVPlayer/'), self.graphicsSourceArchive)
         self.cmd = iptv_system( cmd, self.__unpackCmdFinished )
         
     def stepGetIconsArchive(self):
@@ -502,7 +502,7 @@ class UpdateMainAppImpl(IUpdateObjectInterface):
             self.stepFinished(0, _('Skipped.'))
             return
         
-        cmd = 'tar -xzf "%s" -C "%s" 2>&1; PREV_RET=$?; rm -f "%s" > /dev/null 2>&1; (exit $PREV_RET)' % (self.iconsSourceArchive, os_path.join(self.ExtensionTmpPath, 'IPTVPlayer/'), self.iconsSourceArchive)
+        cmd = 'tar -xzf "%s" -C "%s" 2>&1; PREV_RET=$?; rm -f "%s" ; (exit $PREV_RET)' % (self.iconsSourceArchive, os_path.join(self.ExtensionTmpPath, 'IPTVPlayer/'), self.iconsSourceArchive)
         self.cmd = iptv_system( cmd, self.__unpackCmdFinished )
         
     def stepCheckFiles(self):
@@ -616,7 +616,7 @@ class UpdateMainAppImpl(IUpdateObjectInterface):
         cmd = ''
         try: 
             url = "http://iptvplayer.vline.pl/check.php?ver=%s&type=%s" % (self.serversList[self.currServIdx]['version'], self.serversList[self.currServIdx]['pyver'])
-            cmd = '/usr/bin/wget "%s" -t 1 -T 10 -O - > /dev/null 2>&1; ' % (url)
+            cmd = '/usr/bin/wget "%s" -t 1 -T 10 -O ; ' % (url)
         except Exception: 
             printExc()
         

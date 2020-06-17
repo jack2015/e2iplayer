@@ -489,7 +489,7 @@ class E2iPlayerWidget(Screen):
                     exceptStack = self.workThread.getExceptStack()
                     reporter = GetPluginDir('iptvdm/reporthostcrash.py')
                     msg = urllib_quote('%s|%s|%s|%s' % ('HOST_CRASH', E2iPlayerWidget.IPTV_VERSION, self.hostName, self.getCategoryPath()))
-                    self.crashConsole = iptv_system('python "%s" "http://iptvplayer.vline.pl/reporthostcrash.php?msg=%s" "%s" 2&>1 > /dev/null' % (reporter, msg, exceptStack))
+                    self.crashConsole = iptv_system('python "%s" "http://iptvplayer.vline.pl/reporthostcrash.php?msg=%s" "%s"' % (reporter, msg, exceptStack))
                     printDBG(msg)
                 except Exception:
                     printExc()
@@ -1085,7 +1085,7 @@ class E2iPlayerWidget(Screen):
         if config.plugins.iptvplayer.autoCheckForUpdate.value:
             self.checkUpdateTimer.start(self.checkUpdateTimer_interval, True)
             if IsExecutable( DMHelper.GET_WGET_PATH() ):
-                cmd = '%s "%s" -O - 2> /dev/null ' % (DMHelper.GET_WGET_PATH(), lastVerUrl)
+                cmd = '%s "%s" -O ' % (DMHelper.GET_WGET_PATH(), lastVerUrl)
                 if None != self.checkUpdateConsole: self.checkUpdateConsole.terminate()
                 printDBG("__requestCheckUpdate cmd[%r]" % cmd)
                 self.checkUpdateConsole = iptv_system( cmd, self.__checkUpdateCmdFinished )

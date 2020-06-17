@@ -22,12 +22,7 @@ from Tools.BoundFunction import boundFunction
 from Components.config import config
 ###################################################
 def OVLock():
-	try:
-		from ov import gettitle
-		ovtitle = gettitle()
-		return ovtitle
-	except:
-		return False
+	return True
 ####################################################
 # Wywołanie wtyczki w roznych miejscach
 ####################################################
