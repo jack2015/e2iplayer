@@ -5,6 +5,7 @@
 # LOCAL import
 ###################################################
 from Plugins.Extensions.IPTVPlayer.tools.iptvtools import printDBG, printExc, byteify, RemoveDisallowedFilenameChars, GetMovieMetaDataDir
+from Tools.Directories import fileExists
 
 ###################################################
 
@@ -66,6 +67,10 @@ class IPTVMovieMetaDataHandler():
     def load(self):
         localPrintDBG("IPTVMovieMetaDataHandler.load")
         sts = False
+
+        if not fileExists(self.filePath):
+            return sts
+
         try:
             try:
                 with codecs.open(self.filePath, 'r', self.ENCODING, 'replace') as fp:

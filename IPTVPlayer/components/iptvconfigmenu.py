@@ -506,15 +506,13 @@ def GetMoviePlayer(buffering=False, useAlternativePlayer=False):
         player = config.plugins.iptvplayer.defaultIptvMoviePlayer0
         alternativePlayer = config.plugins.iptvplayer.alternativeIptvMoviePlayer0
 
-    if player.value == 'auto': player = CFakeMoviePlayerOption(availablePlayers[0], GetMoviePlayerName(availablePlayers[0]))
-    try: availablePlayers.remove(player.value)
-    except Exception: printExc()
-
-    if alternativePlayer.value == 'auto': alternativePlayer = CFakeMoviePlayerOption(availablePlayers[0], GetMoviePlayerName(availablePlayers[0]))
-    try: availablePlayers.remove(alternativePlayer.value)
-    except Exception: printExc()
-
     if useAlternativePlayer:
+        if alternativePlayer.value == 'auto': alternativePlayer = CFakeMoviePlayerOption(availablePlayers[0], GetMoviePlayerName(availablePlayers[0]))
+        try: availablePlayers.remove(alternativePlayer.value)
+        except Exception: printExc()
         return alternativePlayer
-
-    return player
+    else:
+        if player.value == 'auto': player = CFakeMoviePlayerOption(availablePlayers[0], GetMoviePlayerName(availablePlayers[0]))
+        try: availablePlayers.remove(player.value)
+        except Exception: printExc()
+        return player
