@@ -1233,9 +1233,11 @@ class CMoviePlayerPerHost():
                 file.close()
                 activePlayer = {}
                 ret = json_loads(ret)
-                activePlayer['buffering'] = ret['buffering']
-                activePlayer['player'] = CFakeMoviePlayerOption(ret['player']['value'], ret['player']['text'])
-                self.activePlayer  = activePlayer
+                if 'buffering' in ret:
+                    activePlayer['buffering'] = ret['buffering']
+                if 'player' in ret:
+                    activePlayer['player'] = CFakeMoviePlayerOption(ret['player']['value'], ret['player']['text'])
+                self.activePlayer = activePlayer
                 sts = True
         except Exception: printExc()
         return sts, ret
