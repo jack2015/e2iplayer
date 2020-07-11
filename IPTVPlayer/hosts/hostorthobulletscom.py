@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from __future__ import division
 ###################################################
 # LOCAL import
 ###################################################
@@ -288,7 +287,7 @@ class OrthoBullets(CBaseHostClass):
         elif category == 'list_speciality':
             self.listItems(self.currItem)
 
-        # Searching // Search History
+        # Searching / Search History
         
         elif category in ["search", "search_next_page"]:
             cItem = dict(self.currItem)
