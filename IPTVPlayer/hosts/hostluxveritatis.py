@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from __future__ import division
 ###################################################
 # LOCAL import
 ###################################################
@@ -246,7 +247,7 @@ class LuxVeritatisPL(CBaseHostClass):
             desc.append(t1)
             t1 = self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(item, '<time', '</time>')[1])
             t2 = self.cleanHtmlStr(self.cm.ph.getDataBeetwenNodes(item, ('<', '>', '_duration'), ('</', '>'))[1])
-            desc.append('%s / %s' % (t1, t2))
+            desc.append('%s // %s' % (t1, t2))
             
             params = dict(cItem)
             params.update({'good_for_fav':True, 'title':title, 'url':url, 'icon':icon, 'desc':'[/br]'.join(desc)})
