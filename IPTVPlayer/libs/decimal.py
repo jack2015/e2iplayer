@@ -1116,7 +1116,7 @@ class Decimal(object):
     __rmul__ = __mul__
 
     def __div__(self, other, context=None):
-        """Return self / other."""
+        """Return self // other."""
         other = _convert_other(other)
         if other is NotImplemented:
             return NotImplemented

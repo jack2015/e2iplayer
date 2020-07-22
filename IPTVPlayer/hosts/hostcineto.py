@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from __future__ import division
 ###################################################
 # LOCAL import
 ###################################################
@@ -29,7 +30,7 @@ class CineTO(CBaseHostClass, CaptchaHelper):
     def __init__(self):
         CBaseHostClass.__init__(self, {'history':'cine.to', 'cookie':'cine.to.cookie'})
         self.DEFAULT_ICON_URL = 'https://cine.to/opengraph.jpg'
-        self.USER_AGENT = 'Mozilla / 5.0 (SMART-TV; Linux; Tizen 2.4.0) AppleWebkit / 538.1 (KHTML, podobnie jak Gecko) SamsungBrowser / 1.1 TV Safari / 538.1'
+        self.USER_AGENT = 'Mozilla // 5.0 (SMART-TV; Linux; Tizen 2.4.0) AppleWebkit // 538.1 (KHTML, podobnie jak Gecko) SamsungBrowser // 1.1 TV Safari // 538.1'
         self.MAIN_URL = 'https://cine.to/'
         self.HEADER = {'User-Agent': self.USER_AGENT, 'DNT':'1', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Accept-Encoding':'gzip, deflate', 'Referer':self.getMainUrl(), 'Accept-Language':GetDefaultLang()}
         self.AJAX_HEADER = dict(self.HEADER)
