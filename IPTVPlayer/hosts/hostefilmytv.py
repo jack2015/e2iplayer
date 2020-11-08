@@ -547,7 +547,7 @@ class EFilmyTv(CBaseHostClass):
             header = dict(self.HTTP_HEADER)
             header['Accept'] = 'image/png,image/*;q=0.8,*/*;q=0.5'
             params = dict(self.defaultParams)
-            params.update( {'maintype': 'image', 'subtypes':['jpeg', 'png'], 'check_first_bytes':['\xFF\xD8','\xFF\xD9','\x89\x50\x4E\x47'], 'header':header} )
+            params.update( {'maintype': 'image', 'subtypes':['jpeg', 'png'], 'check_first_bytes':['\xFF\xD8', '\xFF\xD9', '\x89\x50\x4E\x47'], 'header':header} )
             filePath = GetTmpDir('.iptvplayer_captcha.jpg')
             rm(filePath)
             ret = self.cm.saveWebFile(filePath, imgUrl.replace('&amp;', '&'), params)
@@ -561,8 +561,8 @@ class EFilmyTv(CBaseHostClass):
             params['with_accept_button'] = True
             params['list'] = []
             item = deepcopy(IPTVMultipleInputBox.DEF_INPUT_PARAMS)
-            item['label_size'] = (160,75)
-            item['input_size'] = (480,25)
+            item['label_size'] = (160, 75)
+            item['input_size'] = (480, 25)
             item['icon_path'] = filePath
             item['title'] = _('Answer')
             item['input']['text'] = ''
@@ -583,7 +583,6 @@ class EFilmyTv(CBaseHostClass):
         ##############################################################################################
         
         jscode = []
-        printDBG("EFilmyTv.getVideoLinks data[%s]" % data)
         tmp = self.cm.ph.getAllItemsBeetwenNodes(data, ('<script', '>'), ('</script', '>'), False)
         for item in tmp:
             if 'eval(' in item:
@@ -603,7 +602,7 @@ class EFilmyTv(CBaseHostClass):
             if videoUrl != '': urlTab.append({'name':'direct_link', 'url':strwithmeta(videoUrl, {'Referer':cUrl})})
         else:
             videoUrl = self.getFullUrl(self.cm.ph.getSearchGroups(data, '''href=['"]([^'^"]+?)['"]''', 1, True)[0], cUrl)
-            if 'aparat' not in videoUrl:
+            if 'clipwatching' in videoUrl:
                 videoUrl = self.getFullUrl(self.cm.ph.getSearchGroups(data, '''<iframe[^>]+?src=['"]([^"^']+?)['"]''', 1, True)[0], cUrl)
             urlTab = self.up.getVideoLinkExt(strwithmeta(videoUrl, {'Referer':cUrl}))
         
