@@ -1,13 +1,10 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-from __future__ import print_function
+﻿# -*- coding: utf-8 -*-
 ###################################################
 # LOCAL import
 ###################################################
 from Plugins.Extensions.IPTVPlayer.components.iptvplayerinit import TranslateTXT as _
 from Plugins.Extensions.IPTVPlayer.components.ihost import CHostBase, CBaseHostClass
-from Plugins.Extensions.IPTVPlayer.tools.iptvtools import printDBG, printExc, rm, byteify
-from Plugins.Extensions.IPTVPlayer.libs.e2ijson import loads as json_loads, dumps as json_dumps
+from Plugins.Extensions.IPTVPlayer.tools.iptvtools import printDBG, printExc, rm
 from Plugins.Extensions.IPTVPlayer.tools.iptvtypes import strwithmeta
 from Plugins.Extensions.IPTVPlayer.tools.e2ijs import js_execute
 ###################################################
@@ -17,24 +14,23 @@ from Plugins.Extensions.IPTVPlayer.tools.e2ijs import js_execute
 ###################################################
 import urlparse
 import re
-import base64
 import urllib
+import base64
 try:    import json
 except Exception: import simplejson as json
-from copy import deepcopy
 ###################################################
 
 
 def gettytul():
-    return 'https://ekinomaniak.net/'
+    return 'https://filman.cc/'
 
-class eKinomaniak(CBaseHostClass):
+class Filman(CBaseHostClass):
     
     def __init__(self):
-        CBaseHostClass.__init__(self, {'history':'ekinomaniak.online', 'cookie':'ekinomaniak.online.cookie'})
+        CBaseHostClass.__init__(self, {'history':'Filman.online', 'cookie':'Filman.online.cookie'})
         self.USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0'
-        self.MAIN_URL = 'https://ekinomaniak.net/'
-        self.DEFAULT_ICON_URL = 'https://ekinomaniak.net/img/video.png'
+        self.MAIN_URL = 'https://filman.cc/'
+        self.DEFAULT_ICON_URL = 'https://filman.cc/public/dist/images/logo.png'
         self.HTTP_HEADER = {'User-Agent': self.USER_AGENT, 'DNT':'1', 'Accept': 'text/html', 'Accept-Encoding':'gzip, deflate', 'Referer':self.getMainUrl(), 'Origin':self.getMainUrl()}
         self.AJAX_HEADER = dict(self.HTTP_HEADER)
         self.AJAX_HEADER.update( {'X-Requested-With': 'XMLHttpRequest', 'Accept-Encoding':'gzip, deflate', 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8', 'Accept':'application/json, text/javascript, */*; q=0.01'} )
@@ -44,58 +40,13 @@ class eKinomaniak(CBaseHostClass):
         self.defaultParams = {'header':self.HTTP_HEADER, 'with_metadata':True, 'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE}
 
     def getPage(self, baseUrl, addParams = {}, post_data = None):
-        if addParams == {}:
-            addParams = dict(self.defaultParams)
-            
+        if addParams == {}: addParams = dict(self.defaultParams)
+        origBaseUrl = baseUrl
+        baseUrl = self.cm.iriToUri(baseUrl)
         def _getFullUrl(url):
-            if url == '': return ''
-            
-            if self.cm.isValidUrl(url):
-                return url
-            else:
-                return urlparse.urljoin(baseUrl, url)
-            
+            if self.cm.isValidUrl(url): return url
+            else: return urlparse.urljoin(baseUrl, url)
         addParams['cloudflare_params'] = {'domain':self.up.getDomain(baseUrl), 'cookie_file':self.COOKIE_FILE, 'User-Agent':self.USER_AGENT, 'full_url_handle':_getFullUrl}
-        
-        url = baseUrl
-        urlParams = deepcopy(addParams)
-        urlData = deepcopy(post_data)
-        unloadUrl = None #
-        tries = 0
-        removeCookieItems = False
-        while tries < 20:
-            tries += 1
-            sts, data = self.cm.getPageCFProtection(url, urlParams, urlData)
-            if not sts: return sts, data
-
-            if unloadUrl != None:
-                self.cm.getPageCFProtection(unloadUrl, urlParams)
-                unloadUrl = None
-            
-            if 'sucuri_cloudproxy' in data:
-                cookieItems = {}
-                jscode = self.cm.ph.getDataBeetwenNodes(data, ('<script', '>'), ('</script', '>'), False)[1]
-                if 'eval' in jscode:
-                    jscode = '%s\n%s' % (base64.b64decode('''dmFyIGlwdHZfY29va2llcz1bXSxkb2N1bWVudD17fTtPYmplY3QuZGVmaW5lUHJvcGVydHkoZG9jdW1lbnQsImNvb2tpZSIse2dldDpmdW5jdGlvbigpe3JldHVybiIifSxzZXQ6ZnVuY3Rpb24obyl7bz1vLnNwbGl0KCI7IiwxKVswXS5zcGxpdCgiPSIsMiksb2JqPXt9LG9ialtvWzBdXT1vWzFdLGlwdHZfY29va2llcy5wdXNoKG9iail9fSk7dmFyIHdpbmRvdz10aGlzLGxvY2F0aW9uPXt9O2xvY2F0aW9uLnJlbG9hZD1mdW5jdGlvbigpe3ByaW50KEpTT04uc3RyaW5naWZ5KGlwdHZfY29va2llcykpfTs='''), jscode)
-                    ret = js_execute( jscode )
-                    if ret['sts'] and 0 == ret['code']:
-                        try:
-                            cookies = byteify(json_loads(ret['data'].strip()))
-                            for cookie in cookies: cookieItems.update(cookie)
-                        except Exception:
-                            printExc()
-                self.defaultParams['cookie_items'] = cookieItems
-                urlParams['cookie_items'] = cookieItems
-                removeCookieItems = False
-                sts, data = self.cm.getPageCFProtection(url, urlParams, urlData)
-            
-            # remove not needed used cookie
-            if removeCookieItems:
-                self.defaultParams.pop('cookie_items', None)
-            self.cm.clearCookie(self.COOKIE_FILE, removeNames=['___utmvc'])
-            #printDBG(data)
-            return sts, data
-        
         return self.cm.getPageCFProtection(baseUrl, addParams, post_data)
         
     def setMainUrl(self, url):
@@ -103,65 +54,65 @@ class eKinomaniak(CBaseHostClass):
             self.MAIN_URL = self.cm.getBaseUrl(url)
     
     def listMainMenu(self, cItem):
-        printDBG("eKinomaniak.listMainMenu")
+        printDBG("Filman.listMainMenu")
 
-        MAIN_CAT_TAB = [{'category':'list_sort',      'title': _('Movies'),         'url':self.getFullUrl('/watch/movies/')},
-                        {'category':'list_sort',      'title': _('Series'),         'url':self.getFullUrl('/watch/tv-shows')},
-                        {'category':'list_years',     'title': _('Movies by year'), 'url':self.MAIN_URL},
-                        {'category':'list_cats',      'title': _('Movies genres'),  'url':self.MAIN_URL},
-                        {'category':'list_az',        'title': _('Alphabetically'), 'url':self.MAIN_URL},
+        MAIN_CAT_TAB = [{'category':'list_sort',       'title': _('Movies'),         'url':self.getFullUrl('/filmy-online-pl/')},
+                        {'category':'list_items',      'title': _('Children'),       'url':self.getFullUrl('/dla-dzieci-pl/')},
+                        {'category':'list_sort',       'title': _('Series'),         'url':self.getFullUrl('/seriale-online-pl/')},
+#                        {'category':'list_years',     'title': _('Movies by year'), 'url':self.MAIN_URL},
+#                        {'category':'list_cats',      'title': _('Movies genres'),  'url':self.MAIN_URL},
+#                        {'category':'list_az',        'title': _('Alphabetically'), 'url':self.MAIN_URL},
                         {'category':'search',         'title': _('Search'),         'search_item':True}, 
                         {'category':'search_history', 'title': _('Search history')},]
         self.listsTab(MAIN_CAT_TAB, cItem)
     
     ###################################################
-    def _fillMovieFilters(self):
+    def _fillMovieFilters(self, cItem):
         self.cacheMovieFilters = { 'cats':[], 'sort':[], 'years':[], 'az':[]}
 
-        sts, data = self.getPage(self.getFullUrl('/watch/movies/'))
+        sts, data = self.getPage(cItem['url'])
         if not sts: return
 
         # fill sort
-        dat = self.cm.ph.getDataBeetwenMarkers(data, '<ul class="dropdown-menu"', '</ul>', False)[1]
-        dat = re.compile('<a[^>]+?href="([^"]+?)"[^>]*?>(.+?)</a>').findall(dat)
+        dat = self.cm.ph.getDataBeetwenMarkers(data, '<ul id="filter-sort"', '</ul>', False)[1]
+        dat = re.compile('<li[^>]+?data-sort="([^"]+?)".*?<a[^>]*?>(.+?)</a>').findall(dat)
         for item in dat:
             self.cacheMovieFilters['sort'].append({'title': self.cleanHtmlStr(item[1]), 'sort': item[0]})
 
-        sts, data = self.getPage(self.MAIN_URL)
-        if not sts: return
+#        sts, data = self.getPage(self.MAIN_URL)
+#        if not sts: return
         
         # fill cats
-        dat = self.cm.ph.getDataBeetwenMarkers(data, '<b class="icon-hdd"', '</ul>', False)[1]
-        dat = re.compile('<a[^>]+?href="([^"]+?)"[^>]*?>(.+?)</a>').findall(dat)
-        for item in dat:
-            self.cacheMovieFilters['cats'].append({'title': self.cleanHtmlStr(item[1]), 'url': self.getFullUrl(item[0])})
+#        dat = self.cm.ph.getDataBeetwenMarkers(data, '<ul id="filter-category"', '</ul>', False)[1]
+#        dat = re.compile('<li[^>]+?data-id="([^"]+?)".*?<a[^>]*?>(.+?)</a>').findall(dat)
+#        for item in dat:
+#            self.cacheMovieFilters['cats'].append({'title': self.cleanHtmlStr(item[1]), 'url': self.getFullUrl(item[0])})
             
         # fill years
-        dat = self.cm.ph.getDataBeetwenMarkers(data, '<ul class="dropdown-menu year-dropdown"', '</ul>', False)[1]
-        dat = re.compile('<a[^>]+?href="([^"]+?)"[^>]*?>(.+?)</a>').findall(dat)
-        for item in dat:
-            self.cacheMovieFilters['years'].append({'title': self.cleanHtmlStr(item[1]), 'url': self.getFullUrl(item[0])})
+#        dat = self.cm.ph.getDataBeetwenMarkers(data, '<ul class="dropdown-menu year-dropdown"', '</ul>', False)[1]
+#        dat = re.compile('<a[^>]+?href="([^"]+?)"[^>]*?>(.+?)</a>').findall(dat)
+#        for item in dat:
+#            self.cacheMovieFilters['years'].append({'title': self.cleanHtmlStr(item[1]), 'url': self.getFullUrl(item[0])})
 
         # fill az
-        dat = self.cm.ph.getDataBeetwenMarkers(data, '<ul class=starting-letter>', '</ul>', False)[1]
-        dat = re.compile('<a[^>]+?href="([^"]+?)"[^>]*?>(.+?)</a>').findall(dat)
-        for item in dat:
-            self.cacheMovieFilters['az'].append({'title': self.cleanHtmlStr(item[1]), 'url': self.getFullUrl(item[0])})
+#        dat = self.cm.ph.getDataBeetwenMarkers(data, '<ul class=starting-letter>', '</ul>', False)[1]
+#        dat = re.compile('<a[^>]+?href="([^"]+?)"[^>]*?>(.+?)</a>').findall(dat)
+#        for item in dat:
+#            self.cacheMovieFilters['az'].append({'title': self.cleanHtmlStr(item[1]), 'url': self.getFullUrl(item[0])})
     
     ###################################################
     def listMovieFilters(self, cItem, category):
-        printDBG("eKinomaniak.listMovieFilters")
+        printDBG("Filman.listMovieFilters")
         
         filter = cItem['category'].split('_')[-1]
-        if 0 == len(self.cacheMovieFilters[filter]):
-            self._fillMovieFilters()
+        self._fillMovieFilters(cItem)
         if len(self.cacheMovieFilters[filter]) > 0:
             filterTab = []
             filterTab.extend(self.cacheMovieFilters[filter])
             self.listsTab(filterTab, cItem, category)
         
     def listsTab(self, tab, cItem, category=None):
-        printDBG("eKinomaniak.listsTab")
+        printDBG("Filman.listsTab")
         for item in tab:
             params = dict(cItem)
             if None != category:
@@ -170,7 +121,7 @@ class eKinomaniak(CBaseHostClass):
             self.addDir(params)
 
     def listItems(self, cItem):
-        printDBG("eKinomaniak.listItems %s" % cItem)
+        printDBG("Filman.listItems %s" % cItem)
         page = cItem.get('page', 1)
 
         url  = cItem['url']
@@ -178,53 +129,60 @@ class eKinomaniak(CBaseHostClass):
         if sort not in url:
             url = url + sort
 
+        if '?' in url: url += '&'
+        else: url += '?'
+        if page > 1: url = url + 'page={0}'.format(page)
+
         sts, data = self.getPage(url)
         if not sts: return
         self.setMainUrl(data.meta['url'])
             
-        nextPage = self.cm.ph.getDataBeetwenNodes(data, ('<div', '>', 'pagination'), ('</div', '>'))[1]
-        nextPage = self.cm.ph.getSearchGroups(nextPage, '''<a[^>]+?href=['"]([^'^"]+?)['"][^>]*?>%s</a>''' % (page + 1))[0]
-        
-        if 'search_term=' not in cItem['url']:
-            data = self.cm.ph.getDataBeetwenMarkers(data, '<hr style="clear:both">', '<div style="clear:both">')[1]
-            data = data.split('<div style="position:relative">')
+        nextPage = self.cm.ph.getDataBeetwenNodes(data, ('<ul', '>', 'pagination'), ('</u', '>'))[1]
+        if '' != self.cm.ph.getSearchGroups(nextPage, 'page=(%s)[^0-9]' % (page+1))[0]:
+            nextPage = True
         else:
-            data = data.split('<div style="postion:relative;">')
+            nextPage = False
+        
+        if 'phrase=' in cItem['url']:
+            data = self.cm.ph.getAllItemsBeetwenNodes(data, ('<a', '>', 'clearfix item'), ('</a', '>'))
+        else:
+            data = self.cm.ph.getAllItemsBeetwenNodes(data, ('<div', '>', 'poster'), ('</a', '>'))
 
         for item in data:
-#            printDBG("eKinomaniak.listItems item %s" % item)
+#            printDBG("Filman.listItems item %s" % item)
             url = self.getFullUrl(self.cm.ph.getSearchGroups(item, '''href=['"]([^"^']+?)['"]''')[0])
-            if '<hr style' in item or url == '': continue
-            icon = self.getFullIconUrl(self.cm.ph.getSearchGroups(item, '''data-src=['"]([^"^']+?)['"]''')[0])
-            if icon == '':
-                icon = self.getFullIconUrl(self.cm.ph.getSearchGroups(item, '''src=['"]([^"^']+?)['"]''')[0])
-            icon = icon.replace('/thumbnails', '')
-            title = self.cleanHtmlStr(self.cm.ph.getDataBeetwenNodes(item, ('</a', '>'), ('</a', '>'), False)[1])
-            desc = self.cleanHtmlStr(item)
-            if 'watch-tv-shows' in url:
+            if '<div id="posters"' in item or url == '': continue
+            icon = self.getFullIconUrl(self.cm.ph.getSearchGroups(item, '''src=['"]([^"^']+?poster[^"^']+?)['"]''')[0])
+            title = self.cm.ph.getSearchGroups(item, '''title=['"]([^"^']+?)['"]''')[0].replace('&quot;', '"'.replace('&amp;', '&'))
+            desc = self.cm.ph.getSearchGroups(item, '''data-text=['"]([^"^']+?)['"]''')[0]
+            if desc == '': desc = self.cleanHtmlStr(self.cm.ph.getDataBeetwenNodes(item, ('<div', '>', 'description'), ('</div', '>'), False)[1])
+            if 'serial-online' in url:
                 params = {'good_for_fav':True,'category':'list_series', 'url':url, 'title':title, 'desc':desc, 'icon':icon}
                 self.addDir(params)
             else:
                 params = {'good_for_fav':True, 'url':url, 'title':title, 'desc':desc, 'icon':icon}
                 self.addVideo(params)
             
-        if nextPage != '':
+        if nextPage:
             params = dict(cItem)
-            params.update({'title':_('Next page'), 'url':self.getFullUrl(nextPage), 'page':page + 1})
+            params.update({'title':_('Next page'), 'page':page + 1})
             self.addDir(params)
 
     def listSeries(self, cItem):
-        printDBG("eKinomaniak.listSeries %s" % cItem)
+        printDBG("Filman.listSeries %s" % cItem)
         sts, data = self.getPage(cItem['url'])
         if not sts: return
         self.setMainUrl(data.meta['url'])
 
-        data = self.cm.ph.getAllItemsBeetwenNodes(data, ('<li', '>', 'active'), ('</ul', '>'))
+        data = self.cm.ph.getDataBeetwenNodes(data, ('<ul', '>', 'episode-list'), ('<hr', '>'))[1]
+        #data = self.cm.ph.getAllItemsBeetwenNodes(data, ('<li', '>', 'active'), ('</ul', '>'))
+        data = data.split('<span')
         for sitem in data:
+#            printDBG("Filman.listSeries sitem %s" % sitem)
             season = self.cleanHtmlStr(self.cm.ph.getDataBeetwenNodes(sitem, ('<span', '>'), ('</span', '>'))[1])
             tmp = self.cm.ph.getAllItemsBeetwenNodes(sitem, ('<li', '>'), ('</li', '>'))
             for item in tmp:
-#                printDBG("eKinomaniak.listSeries item %s" % item)
+#                printDBG("Filman.listSeries item %s" % item)
                 url = self.getFullUrl(self.cm.ph.getSearchGroups(item, '''href=['"]([^"^']+?)['"]''')[0])
                 if url == '': continue
 #                title = season + ' - ' + self.cleanHtmlStr(item)
@@ -233,13 +191,13 @@ class eKinomaniak(CBaseHostClass):
                 self.addVideo(params)
 
     def listSearchResult(self, cItem, searchPattern, searchType):
-        printDBG("eKinomaniak.listSearchResult cItem[%s], searchPattern[%s] searchType[%s]" % (cItem, searchPattern, searchType))
-        url = self.getFullUrl('/ajax/search?search_term=%s') % urllib.quote_plus(searchPattern)
+        printDBG("Filman.listSearchResult cItem[%s], searchPattern[%s] searchType[%s]" % (cItem, searchPattern, searchType))
+        url = self.getFullUrl('/wyszukiwarka?phrase=%s') % urllib.quote_plus(searchPattern)
         params = {'name':'category', 'category':'list_items', 'good_for_fav':False, 'url':url}
         self.listItems(params)
         
     def getLinksForVideo(self, cItem):
-        printDBG("eKinomaniak.getLinksForVideo [%s]" % cItem)
+        printDBG("Filman.getLinksForVideo [%s]" % cItem)
                 
         cacheKey = cItem['url']
         cacheTab = self.cacheLinks.get(cacheKey, [])
@@ -259,25 +217,15 @@ class eKinomaniak(CBaseHostClass):
         sts, data = self.getPage(url, params)
         if not sts: return []
 
-#        sts, jscode = self.getPage('https://ekinomaniak.net/js/bootstrap.php', params)
-#        if not sts: return []
-
         cUrl = data.meta['url']
         self.setMainUrl(cUrl)
-        data = self.cm.ph.getAllItemsBeetwenNodes(data, ('<button', '>', 'play-video'), ('</button', '>'))
-#        data = self.cm.ph.getAllItemsBeetwenNodes(data, 'document.write(shwp',  ('</script', '>'))
+        data = self.cm.ph.getAllItemsBeetwenNodes(data, ('<td', '>', 'link-to-video'), ('</td', '>'))
     
         for item in data:
-            printDBG("eKinomaniak.getLinksForVideo item[%s]" % item)
-#            shwp = self.cm.ph.getSearchGroups(item, '''shwp\(['"]([^"^']+?)['"]''', 1, True)[0]
-#            tmp = jscode + ';var test="%s";print(shwp(test))' % shwp
-#            ret = js_execute( tmp )
-#            if ret['sts'] and 0 == ret['code']:
-#                data = ret['data'].strip()
-#                playerUrl = self.cm.ph.getSearchGroups(data, '''src=['"]([^"^']+?)['"]''', 1, True)[0]
-#            else:
-#                continue
-            playerUrl = self.getFullUrl(self.cm.ph.getSearchGroups(item, '''data-plyr=['"]([^"^']+?)['"]''')[0])
+#            printDBG("Filman.getLinksForVideo item[%s]" % item)
+            playerUrl = base64.b64decode(self.cm.ph.getSearchGroups(item, '''data-iframe=['"]([^"^']+?)['"]''')[0]).replace('\\', '')
+            playerUrl = self.getFullUrl(self.cm.ph.getSearchGroups(playerUrl, '''src['"]:['"]([^"^']+?)['"]''')[0])
+            if playerUrl == '': continue
             retTab.append({'name':self.up.getHostName(playerUrl), 'url':strwithmeta(playerUrl, {'Referer':url}), 'need_resolve':1})
              
         if len(retTab):
@@ -285,7 +233,7 @@ class eKinomaniak(CBaseHostClass):
         return retTab
         
     def getVideoLinks(self, baseUrl):
-        printDBG("eKinomaniak.getVideoLinks [%s]" % baseUrl)
+        printDBG("Filman.getVideoLinks [%s]" % baseUrl)
         baseUrl = strwithmeta(baseUrl)
         urlTab = []
         
@@ -301,22 +249,22 @@ class eKinomaniak(CBaseHostClass):
         return self.up.getVideoLinkExt(baseUrl)
 
     def getArticleContent(self, cItem):
-        printDBG("eKinomaniak.getArticleContent [%s]" % cItem)
+        printDBG("Filman.getArticleContent [%s]" % cItem)
         itemsList = []
 
-        sts, data = self.getPage(cItem['url'])
+        sts, data = self.cm.getPage(cItem['url'])
         if not sts: return []
 
         title = cItem['title']
         icon = cItem.get('icon', '')
         desc = cItem.get('desc', '')
 
-        title = self.cm.ph.getDataBeetwenMarkers(data, '<title>', '</title>', True)[1]
-        if title.endswith('Online</title>'): title = title.replace('Online', '')
-        icon = self.getFullIconUrl(self.cm.ph.getSearchGroups(title, '''this\.src=['"]([^"^']+?)['"]''', 1, True)[0])
-        desc = self.cm.ph.getDataBeetwenMarkers(data, '<dt>Opis:</dt>', '</dd>', True)[1]
-        itemsList.append((_('Duration'), self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(data, '<dt>Czas trwania:</dt>', '</dd>', False)[1])))
-        itemsList.append((_('Genres'), self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(data, '<ul class="genres">', '</ul>', True)[1])))
+#        title = self.cm.ph.getDataBeetwenMarkers(data, '<title>', '</title>', True)[1]
+#        if title.endswith('Online</title>'): title = title.replace('Online', '')
+#        icon = self.getFullIconUrl(self.cm.ph.getSearchGroups(title, '''this\.src=['"]([^"^']+?)['"]''', 1, True)[0])
+        desc = self.cm.ph.getDataBeetwenNodes(data, ('<p', '>', 'description'), ('</p', '>'))[1]
+#        itemsList.append((_('Duration'), self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(data, '<dt>Czas trwania:</dt>', '</dd>', False)[1])))
+#        itemsList.append((_('Genres'), self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(data, '<ul class="genres">', '</ul>', True)[1])))
 
         if title == '': title = cItem['title']
         if icon  == '': icon  = cItem.get('icon', '')
@@ -370,7 +318,7 @@ class eKinomaniak(CBaseHostClass):
 class IPTVHost(CHostBase):
 
     def __init__(self):
-        CHostBase.__init__(self, eKinomaniak(), True, [])
+        CHostBase.__init__(self, Filman(), True, [])
 
     def withArticleContent(self, cItem):
         return True

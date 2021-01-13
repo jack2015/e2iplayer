@@ -557,50 +557,51 @@ class urlparser:
                        'veuclips.com':         self.pp.parserVEUCLIPS, 
 #                       'verystream.com':       self.pp.parserVERYSTREAM     ,
 #                       'woof.tube':            self.pp.parserVERYSTREAM     ,
-                       'rapidstream.co':       self.pp.parserRAPIDSTREAMCO,
-                       'videohouse.me':        self.pp.parserVIDEOHOUSE,
-                       'justupload.io':        self.pp.parserJUSTUPLOAD,
-                       'vidspace.io':          self.pp.parserVIDEOSPACE,
-                       'veuclips.com':         self.pp.parserVIUCLIPS,
-                       'viuclips.net':         self.pp.parserVIUCLIPS,
-                       'vidstreamup.com':      self.pp.parserVIUCLIPS,
-                       'upclips.online':       self.pp.parserVIUCLIPS,
-                       'toclipit.com':         self.pp.parserVIUCLIPS,
-                       'forstreams.com':       self.pp.parserVIUCLIPS,
-                       'veuclipstoday.tk':     self.pp.parserVIUCLIPS,
-                       'streamatus.tk':        self.pp.parserVIUCLIPS,
-                       'onlystream.tv':        self.pp.parserONLYSTREAMTV,
-                       'tunestream.net':       self.pp.parserONLYSTREAMTV,
-                       'vidia.tv':             self.pp.parserONLYSTREAMTV,
-                       'youdbox.com':          self.pp.parserONLYSTREAMTV,
-                       'upstream.to':          self.pp.parserONLYSTREAMTV,
-                       'supervideo.tv':        self.pp.parserONLYSTREAMTV,
-                       'streamwire.net':       self.pp.parserONLYSTREAMTV,
-                       'vidoo.tv':             self.pp.parserONLYSTREAMTV,
-                       'vup.to':               self.pp.parserONLYSTREAMTV,
-                       'upvideo.cc':           self.pp.parserONLYSTREAMTV,
-                       'playtube.ws':          self.pp.parserONLYSTREAMTV,
-                       'vkprime.com':          self.pp.parserONLYSTREAMTV,
-                       'jetload.net':          self.pp.parserJETLOADNET,
-                       'mixdrop.co':           self.pp.parserMIXDROP,
-                       'mixdrop.club':         self.pp.parserMIXDROP,
-                       'vidload.net':          self.pp.parserVIDLOADNET,
-                       'vidcloud9.com':        self.pp.parserVIDCLOUD9,
-                       'abcvideo.cc':          self.pp.parserABCVIDEO,
-                       'easyload.io':          self.pp.parserEASYLOAD,
-                       'videobin.co':          self.pp.parserVIDEOBIN,
-                       'mirrorace.com':        self.pp.parserMIRRORACE,
-                       'mstream.fun':          self.pp.parserMSTREAMICU,
-                       'mstream.icu':          self.pp.parserMSTREAMICU,
-                       'mstream.xyz':          self.pp.parserMSTREAMICU,
-                       'mstream.press':        self.pp.parserMSTREAMICU,
-                       'premiumserver.club':   self.pp.parserMSTREAMICU,
-                       'mystream.streamango.to': self.pp.parserMSTREAMICU,
-                       'embed.mystream.to':    self.pp.parserMSTREAMICU,
-                       'dood.to':              self.pp.parserDOOD,
-                       'dood.watch':           self.pp.parserDOOD,
-                       'doodstream.com':       self.pp.parserDOOD,
-                       'govod.tv':             self.pp.parserWIIZTV,
+                       'rapidstream.co':       self.pp.parserRAPIDSTREAMCO  ,
+                       'videohouse.me':        self.pp.parserVIDEOHOUSE     ,
+                       'justupload.io':        self.pp.parserJUSTUPLOAD     ,
+                       'vidspace.io':          self.pp.parserVIDEOSPACE     ,
+                       'veuclips.com':         self.pp.parserVIUCLIPS       ,
+                       'viuclips.net':         self.pp.parserVIUCLIPS       ,
+                       'vidstreamup.com':      self.pp.parserVIUCLIPS       ,
+                       'upclips.online':       self.pp.parserVIUCLIPS       ,
+                       'toclipit.com':         self.pp.parserVIUCLIPS       ,
+                       'forstreams.com':       self.pp.parserVIUCLIPS       ,
+                       'veuclipstoday.tk':     self.pp.parserVIUCLIPS       ,
+                       'streamatus.tk':        self.pp.parserVIUCLIPS       ,
+                       'onlystream.tv':        self.pp.parserONLYSTREAMTV   ,
+                       'tunestream.net':       self.pp.parserONLYSTREAMTV   ,
+                       'vidia.tv':             self.pp.parserONLYSTREAMTV   ,
+                       'youdbox.com':          self.pp.parserONLYSTREAMTV   ,
+                       'upstream.to':          self.pp.parserONLYSTREAMTV   ,
+                       'supervideo.tv':        self.pp.parserONLYSTREAMTV   ,
+                       'streamwire.net':       self.pp.parserONLYSTREAMTV   ,
+                       'vidoo.tv':             self.pp.parserONLYSTREAMTV   ,
+                       'vup.to':               self.pp.parserONLYSTREAMTV   ,
+                       'upvideo.cc':           self.pp.parserONLYSTREAMTV   ,
+                       'playtube.ws':          self.pp.parserONLYSTREAMTV   ,
+                       'vkprime.com':          self.pp.parserONLYSTREAMTV   ,
+                       'jetload.net':          self.pp.parserJETLOADNET     ,
+                       'mixdrop.co':           self.pp.parserMIXDROP        ,
+                       'mixdrop.club':         self.pp.parserMIXDROP        ,
+                       'vidload.net':          self.pp.parserVIDLOADNET     ,
+                       'vidcloud9.com':        self.pp.parserVIDCLOUD9      ,
+                       'abcvideo.cc':          self.pp.parserABCVIDEO       ,
+                       'easyload.io':          self.pp.parserEASYLOAD       ,
+                       'videobin.co':          self.pp.parserVIDEOBIN       ,
+                       'mirrorace.com':        self.pp.parserMIRRORACE      ,
+                       'mstream.fun':          self.pp.parserMSTREAMICU     ,
+                       'mstream.icu':          self.pp.parserMSTREAMICU     ,
+                       'mstream.xyz':          self.pp.parserMSTREAMICU     ,
+                       'mstream.press':        self.pp.parserMSTREAMICU     ,
+                       'premiumserver.club':   self.pp.parserMSTREAMICU     ,
+                       'mystream.streamango.to': self.pp.parserMSTREAMICU   ,
+                       'embed.mystream.to':    self.pp.parserMSTREAMICU     ,
+                       'dood.to':              self.pp.parserDOOD           ,
+                       'dood.watch':           self.pp.parserDOOD           ,
+                       'doodstream.com':       self.pp.parserDOOD           ,
+                       'govod.tv':             self.pp.parserWIIZTV         ,
+                       'streamtape.com':       self.pp.parserSTREAMTAPE     ,
                     }
         return
     
@@ -7996,122 +7997,58 @@ class pageParser(CaptchaHelper):
         
     def parserUPTOSTREAMCOM(self, baseUrl):
         printDBG("parserUPTOSTREAMCOM baseUrl[%s]" % baseUrl)
+        #example https://uptostream.com/iframe/kfaru03fqthy
+        #        https://uptostream.com/xjo9gegjzf8c
+        #        https://uptostream.com/api/streaming/source/get?token=null&file_code=zxfcxyy8in9e
         
-        sts, baseData = self.cm.getPage(baseUrl)
-        if not sts: return False
-        baseUrl = self.cm.meta['url']
-        
-        timestamp = time.time()
-        cUrl = baseUrl
-        url = baseUrl
-        domain = urlparser.getDomain(baseUrl) 
-        if '/iframe/' not in url:
-            url = 'https://' + domain + '/iframe/' + url.split('/')[-1]
-        else:
-            url = baseUrl
         
         urlTab = []
-        tries = 0
-        while tries < 2:
-            tries += 1
-            
-            if tries == 2 and domain != 'uptostream.com':
-                url = url.replace(domain, 'uptostream.com')
-                domain = 'uptostream.com'
-            
-            sts, data = self.cm.getPage(url)
-            if not sts: return False
-            
-            errMsg = self.cm.ph.getDataBeetwenNodes(data, ('<div', '>', 'error'), ('</div', '>'))[1]
-            SetIPTVPlayerLastHostError(clean_html(errMsg).strip())
+        m = re.search("(iframe/|file_code=)(?P<id>.*)$", baseUrl)
         
-            subTracks = []
-            tmp = self.cm.ph.getAllItemsBeetwenMarkers(data, '<track', '</track>', False, False)
-            for item in tmp:
-                if 'subtitles' not in item: continue
-                type  = self.cm.ph.getSearchGroups(item, '''type=['"]([^"^']+?)['"]''')[0]
-                lang  = self.cm.ph.getSearchGroups(item, '''lang=['"]([^"^']+?)['"]''')[0]
-                label = self.cm.ph.getSearchGroups(item, '''label=['"]([^"^']+?)['"]''')[0]
-                url   = self.cm.ph.getSearchGroups(item, '''src=['"]([^"^']+?)['"]''')[0]
-                if url.startswith('//'):
-                    url = 'http:' + url
-                if '://' not in url: continue
-                subTracks.append({'title':label, 'url':url, 'lang':label, 'format':type})
+        if m:
+            video_id = m.groupdict().get('id','')
+        else:
+            video_id = baseUrl.split("/")[-1] 
             
-            #'<font color="red">', '</font>'
-            items = self.cm.ph.getAllItemsBeetwenMarkers(data, '<source ', '>', False, False)
-            if 0 == len(items):
-                sts, items = self.cm.ph.getDataBeetwenReMarkers(data, re.compile('''var\s+sources\s*=\s*\['''), re.compile('''\]'''), False)
-                if not sts: sts, items = self.cm.ph.getDataBeetwenMarkers(data, 'sources', ']', False)
-                items = items.split('},')
+        if video_id:
+            url2 = "https://uptostream.com/api/streaming/source/get?token=null&file_code=%s" % video_id
             
-            printDBG(items)
-            for item in items:
-                item = item.replace('\/', '/')
-                if 'video/mp4' not in item: continue
-                type = self.cm.ph.getSearchGroups(item, '''type['"]?\s*[=:]\s*['"]([^"^']+?)['"]''')[0]
-                res  = self.cm.ph.getSearchGroups(item, '''res['"]?\s*[=:]\s*['"]([^"^']+?)['"]''')[0]
-                lang = self.cm.ph.getSearchGroups(item, '''lang['"]?\s*[=:]\s*['"]([^"^']+?)['"]''')[0]
-                url  = self.cm.ph.getSearchGroups(item, '''src['"]?\s*[=:]\s*['"]([^"^']+?)['"]''')[0]
-                if url.startswith('//'):
-                    url = 'http:' + url
-                if self.cm.isValidUrl(url):
-                    url = strwithmeta(url, {'Referer':self.cm.meta['url'], 'external_sub_tracks':subTracks})
-                    urlTab.append({'name':domain + ' {0} {1}'.format(lang, res), 'url':url})
-            if len(urlTab):
-                break
-        urlTab.reverse()
-        
-        if len(urlTab) == 0:
-            sleep_time = self.cm.ph.getSearchGroups(baseData, '''data\-remaining\-time=['"]([0-9]+?)['"]''')[0]
-            if sleep_time != '':
-                sleep_time = float(sleep_time)
-                sleep_time -= time.time() - timestamp
-                if  sleep_time > 0:
-                    GetIPTVSleep().Sleep(int(math.ceil(sleep_time)) + 1)
-                
-            errMsg = self.cm.ph.getDataBeetwenNodes(baseData, ('<', '>', 'fa-times'), ('</p', '>'))[1]
-            if errMsg == '':
-                errMsg = self.cm.ph.getDataBeetwenNodes(baseData, ('<form', '>'), ('</form', '>'))[1]
-            SetIPTVPlayerLastHostError(clean_html(errMsg).strip())
+            sts, data = self.cm.getPage(url2)
             
-            tmp = ''
-            tmpTab = self.cm.ph.getAllItemsBeetwenNodes(baseData, ('<form', '>', 'post'), ('</form', '>'), True, caseSensitive=False)
-            for tmpItem in tmpTab:
-                if 'waitingToken' in tmpItem:
-                    tmp = tmpItem
-                    break
-            
-            if tmp != '':
-                action = self.cm.getFullUrl(self.cm.ph.getSearchGroups(tmp, '''action=['"]([^'^"]+?)['"]''', ignoreCase=True)[0], baseUrl)
-                if action == '': action = baseUrl
-                
-                tmp = self.cm.ph.getAllItemsBeetwenMarkers(tmp, '<input', '>', False, False)
-                post_data = {}
-                for item in tmp:
-                    name  = self.cm.ph.getSearchGroups(item, '''name=['"]([^'^"]+?)['"]''', ignoreCase=True)[0]
-                    value = self.cm.ph.getSearchGroups(item, '''value=['"]([^'^"]+?)['"]''', ignoreCase=True)[0]
-                    if name != '' and value != '': post_data[name] = value
-                
-                sts, baseData = self.cm.getPage(action, post_data=post_data)
-                if not sts: return urlTab
-                baseUrl = self.cm.meta['url']
-            
-            printDBG(baseData)
-            
-            tries = 0
-            while tries < 2:
-                tries += 1
-                downloadLink = self.cm.ph.getDataBeetwenNodes(baseData, ('<a', '>', 'button-green-flat '), ('</a', '>'))[1]
-                downloadLink = self.cm.getFullUrl(self.cm.ph.getSearchGroups(downloadLink, '''href=['"]([^'^"]+?)['"]''')[0], baseUrl)
-                if downloadLink != '': 
-                    urlTab.append({'name':'%s - download' % domain, 'url':strwithmeta(downloadLink, {'Referer':baseUrl})})
-                    break
-                
-                sts, baseData = self.cm.getPage(baseUrl)
-                if not sts: return urlTab
-            
+            if sts:
+                response=json_loads(data)
+                if response.get("message",'') == "Success":
+                    code = response["data"]["sources"]
+                    
+                    code = code.replace(";let",";var")
+                    code = code + "\n console.log(sources);"
+                    printDBG("---------- javascript code -----------")
+                    printDBG(code)
+                    
+                    ret = js_execute( code )
+                    if ret['sts'] and 0 == ret['code']:
+                        data = ret['data'].split('}')
+                        for item in data:
+                            url  = self.cm.ph.getSearchGroups(item, '''src:['"]([^"^']+?)['"]''')[0]
+                            if url.startswith('//'):
+                                url = 'http:' + url
+                            if not url.startswith('http'):
+                                continue
+                            
+                            if 'video/mp4' in item:
+                                type = self.cm.ph.getSearchGroups(item, '''type:['"]([^"^']+?)['"]''')[0]
+                                res  = self.cm.ph.getSearchGroups(item, '''res:['"]([^"^']+?)['"]''')[0]
+                                label = self.cm.ph.getSearchGroups(item, '''label:['"]([^"^']+?)['"]''')[0]
+                                if label == '': label = res
+                                url = urlparser.decorateUrl(url, {'Referer':baseUrl})
+                                urlTab.append({'name':'{0}'.format(label), 'url':url})
+                            else:
+                                url = urlparser.decorateUrl(url, {'iptv_proto':'m3u8', 'Referer':baseUrl, 'Origin':urlparser.getDomain(baseUrl, False)})
+                                tmpTab = getDirectM3U8Playlist(url, checkExt=True, checkContent=True)
+                                urlTab.extend(tmpTab)
+
         return urlTab
+
         
     def parseVIMEOCOM(self, baseUrl):
         printDBG("parseVIMEOCOM baseUrl[%s]" % baseUrl)
@@ -10251,9 +10188,14 @@ class pageParser(CaptchaHelper):
         
     def parserWIIZTV(self, baseUrl):
         printDBG("parserWIIZTV url[%s]\n" % baseUrl)
-        HTTP_HEADER= { 'User-Agent':'Mozilla/5.0'}
         
-        sts, data = self.cm.getPage(baseUrl, {'header':HTTP_HEADER})
+        baseUrl = strwithmeta(baseUrl)
+        referer = baseUrl.meta.get('Referer', baseUrl)
+        
+        HTTP_HEADER = { 'User-Agent':'Mozilla/5.0', 'Referer':referer}
+        params = {'header':HTTP_HEADER}
+        
+        sts, data = self.cm.getPage(baseUrl, params)
         if not sts: return False
         
         tmp = self.cm.ph.getDataBeetwenMarkers(data, '<video', '</video>')[1]
@@ -12982,3 +12924,27 @@ class pageParser(CaptchaHelper):
                     urlsTab.append(params)
         
         return urlsTab
+
+    def parserSTREAMTAPE(self, baseUrl):
+        printDBG("parserSTREAMTAPE baseUrl[%s]" % baseUrl)
+        
+        sts, data = self.cm.getPage(baseUrl)
+
+        urlTabs=[]
+        
+        if sts:
+#            printDBG("---------")
+#            printDBG(data)
+#            printDBG("---------")
+            
+            #search url in tag like <div id="videolink" style="display:none;">//streamtape.com/get_video?id=27Lbk7KlQBCZg02&expires=1589450415&ip=DxWsE0qnDS9X&token=Og-Vxdpku4x8</div>
+            t = eval(self.cm.ph.getSearchGroups(data, '''innerHTML = ([^;]+?);''')[0])
+            printDBG("parserSTREAMTAPE t[%s]" % t)
+            if t.startswith('//'): t = "https:" + t
+            if self.cm.isValidUrl(t):
+                t = urlparser.decorateUrl(t, {'Referer': baseUrl})
+                params = {'name': 'link' , 'url': t}
+                printDBG(params)
+                urlTabs.append(params)
+                
+        return urlTabs
